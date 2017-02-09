@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../css/default.css">
+	<link rel="stylesheet" type="text/css" href="../css/resume.css">
+	<script type="text/javascript" src='../js/resume.js'></script>
+</head>
+<body>
+   <div id="nav">
+    <ul id="navbar">
+    	<li><a href='index.html'>首页</a></li>
+    	<li><a href='product.html'>作品</a></li>
+    	<li><a href='resume.html'>简历</a></li>
+    </ul>
+    <p class="title" style="cursor:pointer;">MaoYe</p>
+   </div>
+   <div class="parallax parallax-1">
+      <a href="../resume.doc" download="" style='display: block;width: 100px;height: 30px;margin: 100px auto;color: #fff;border: 1px dashed #fff;text-align: center;line-height: 30px;'>简历下载</a>
+   </div>
+   <div class="content">
+     <div class="left">
+      <pre>
+         function Person(){
+            this.name="黄应茂";
+            this.sex='男';
+            this.phone="18814188516";
+            this.email='maoye361@.163.com';
+         }
+         Person.prototype.Name=function(){
+           alert(this.name);
+         }
+         Person.prototype.Phone=function(){
+           console.log(this.phone);
+         }
+         Person.prototype.Email=function(){
+           alert(this.email);
+         }
+         var person=new Person();
+      </pre>
+      </div>
+      <div class="right">
+      <pre>
+        function Person_child(){
+          Person.call(this);
+        }
+        for(var i in Person.prototype)
+        {
+          Person_child.prototype[i]
+          =
+          Person.prototype[i];
+        }
+        Person_child.prototype.Name=function(){
+          console.log(this.name);
+        }
+        var person_child=new Person_child();
+      </pre>
+      </div>
+   </div>
+   <div class="parallax parallax-2">
+      <div class="about">
+         <h1>About Me</h1>
+         <p>1.熟悉面向对象思想，能运用面向对象进行开发</p>
+         <p>2.熟悉HTML5的canvas、svg</p>
+         <p>3.了解MVC思想，了解angularjs的简单应用</p>
+         <p>4.了解一些PHP和Mysql数据库技术，对后台也抱有浓厚兴趣</p>
+         <p>5.精通Javascript/DOM前端开发技术,实现设计师要求的网页动态效果</p>
+         <p>6.拥有良好的口头表达能力、善于学习新的技术</p>
+      </div>
+   </div>
+   <div class="parallax parallax-3">
+     <table class="table "> 
+		      <tr>
+                 <td>Name:</td><td>黄应茂</td>
+		      </tr>
+		      <tr>
+                 <td>Sex:</td><td>男</td>
+		      </tr>
+		      <tr>
+                 <td>Area:</td><td>深圳南山区</td>
+		      </tr>
+		      <tr>
+                 <td>Working Seniority :</td><td>一年</td>
+		      </tr>
+		      <tr>
+                 <td>Email:</td><td>maoye@361.163.com</td>
+		      </tr>
+		      <tr>
+                 <td>Tell:</td><td>18814188516</td>
+		      </tr>
+		   </table>
+   </div>
+</body>
+</html>

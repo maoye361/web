@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>bing</title>
+	<style>
+	 body{
+	 	background-color: #333;
+	 }
+	 .bg{
+	 	background-image: url(../image/image/bg.jpg);width: 1500px;height: 740px;margin: 0 auto;
+	 }
+	 .img{
+	 	background-image: url(../image/image/bing.png);width: 107px;height: 53px;float: left;margin: -4px 10px 0 0;
+	 }
+     .box{
+     	position: absolute;top: 200px;left: 250px;
+     }
+     form{
+     	float: left;background-color: white;padding: 5px;border-radius: 8px;
+     }
+     .bing-text{
+     	font-size: 22px;
+     	width: 320px;height: 36px;line-height: 36px;border:0;outline: none;float: left;
+     }
+     .bing-btn{
+     	float: left;
+     	border:none;
+     	background-color: #0c8484;
+     	background-image: url(../image/image/search.png);width: 36px;height: 36px;background-position: -165px -61px;cursor: pointer;
+     }
+     .tip-box{
+     	width:365px;background-color: white;border-radius: 5px;border:1px solid #ccc;border-top: none; 
+     }
+     .tip-box ul{
+     	margin: 0;padding: 0;
+     }
+     .tip-box ul li{
+     	width:359px;padding: 3px;line-height: 25px;font-size: 14px;list-style: none;
+     }
+     .tip-box ul li:hover{
+     	background-color: #ccc;cursor: pointer;
+     }
+	</style>
+</head>
+<body>
+	<div class="bg">
+          <div class="box">
+             <div class="img">
+             </div>
+             <form>
+                <input type="text" class="bing-text" id="bing-text">
+                <input type="button" class="bing-btn" value="" id="bing-btn">
+             </form>
+          </div>	   
+	</div>
+	<div class="tip-box" id="tip-box" style='display: none;'>
+	    <ul id="tip-ul">
+	    	
+	    </ul>
+	</div>
+	<script type="text/javascript" src='../js/jquery-3.1.1.js'></script>
+	<script>
+	  $(function(){
+	  	 $('#bing-text').on('keyup',function(){
+            $("#bing-btn").click(function(){
+                 window.location='https://www.baidu.com/s?wd="'+$("#bing-text").val();
+            });
+	  	 $.ajax({
+	  	 	type:"get",
+			url:"https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",
+			data:{wd:$(this).val()},
+			dataType:"jsonp",
+			jsonp:"cb",
+			success:function(data){
+               var html='';
+	           for(var i=0;i<data.s.length;i++){
+	           	 html+='<li>'+data.s[i]+'</li>';
+	           }
+	           $('#tip-ul').html(html); 
+	         	$('#tip-box').slideDown(400).css({
+	         		position:'absolute',
+	         		top:$('#bing-text').offset().top+$('.box').height()-5,
+	         		left:$('#bing-text').offset().left-5
+	         	});
+	         	$('#tip-ul li').on('click',function(){
+                   window.location='https://www.baidu.com/s?wd="'+data.s[$(this).index()];
+	         	});
+			}
+	  	 })
+	  })
+	  	 $('body').click(function(){
+	  	 	$('#tip-box').slideUp(400);
+	  	 })
+	  	 $('#bing-text').on('focus',function(){
+	  	 	$('#tip-box').slideDown(400);
+	  	 })
+	})
+	</script>
+</body>
+</html>

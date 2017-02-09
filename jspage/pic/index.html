@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>淘宝图片轮播</title>
+	<style type="text/css">
+	body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; }
+body { background:#fff; color:#555; font-size:14px; font-family: Verdana, Arial, Helvetica, sans-serif; }
+td,th,caption { font-size:14px; }
+h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
+address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal;}
+a { color:#555; text-decoration:none; }
+a:hover { text-decoration:underline; }
+img { border:none; }
+ol,ul,li { list-style:none; }
+input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; }
+table { border-collapse:collapse; }
+html {overflow-y: scroll;}
+
+.clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
+.clearfix { *zoom:1; }
+    #main{
+    	width: 730px;
+    	height: 454px;
+    	margin: 5% auto;
+    	/*background: yellow;*/
+    	position: relative;
+    	overflow: hidden;
+        cursor: pointer;
+    }
+    #main .left{
+       width: 100px;
+       height: 100px;
+       position: absolute;
+       top:177px;
+       left:0;
+       z-index: 999;
+       opacity: 0;
+    }
+    #main .right{
+       width: 100px;
+       height: 100px;
+       position: absolute;
+       top:177px;
+       right:0;
+       z-index: 999;
+       opacity: 0;
+    }
+    #main ol{
+    	position: absolute;
+    	right: 250px;
+    	bottom: 20px;
+    	z-index: 999;
+
+    }
+    #main .red{
+    	background: red;
+    	color: #ffffff;
+    }
+    #main ol li{
+    	float: left;
+    	width: 40px;
+    	height: 40px;
+    	line-height: 40px;
+    	font-size: 25px;
+    	text-align: center;
+    	font-weight: 700;
+    	background: #ffffff;
+    	border-radius: 20px;
+    	margin-right: 5px;
+    }
+    #main ul{
+    	height: 454px;
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+    }
+    #main ul li{
+    	width: 730px;
+    	height: 454px;
+    	float: left;
+    }
+    #main ul li img{
+    	width: 730px;
+    	height: 454px;
+    	display: block;
+    }
+	</style>
+	<script src="js/movept.js"></script>
+	<script type="text/javascript">
+    window.onload=function(){
+     var omain=document.getElementById('main');
+     var ol=omain.getElementsByTagName('ol')[0];
+     var oli1=ol.getElementsByTagName('li');
+     var oul=omain.getElementsByTagName('ul')[0];
+     var oli2=oul.getElementsByTagName('li');
+     var now=0;
+     var timer=null;
+     oul.style.height=730*oli2.length;
+     for(var i=0;i<oli1.length;i++){
+      	oli1[i].index=i;
+
+      	oli1[i].onmouseover=function(){
+        now=this.index;
+      	tab();
+      	};      	        	
+      }
+     function tab(){
+     	for(var j=0;j<oli1.length;j++){
+      		oli1[j].className='';
+      	  }
+      	  oli1[now].className='red';
+      	  startMove(oul,{top:-(454*now)})
+     }
+     function next(){
+     	now++;
+     	if(now==oli1.length){
+     		now=0;
+     	}
+     	tab();
+     }
+     timer=setInterval(next,3000);
+     omain.onmouseover=function(){
+     	clearInterval(timer);
+        startMove(oleft,{opacity:100})
+        startMove(oright,{opacity:100})
+     }
+     omain.onmouseout=function(){
+     	timer=setInterval(next,3000);
+        startMove(oleft,{opacity:0});
+        startMove(oright,{opacity:0});
+     }
+    //左右按钮切换图片开始
+    var oleft=omain.getElementsByTagName('div')[0];
+    var oright=omain.getElementsByTagName('div')[1];
+    oleft.onclick=function(){
+        now-=1;
+        if(now<0){
+            now=oli1.length-1;
+        }
+        tab();              
+    }
+    oright.onclick=function(){
+        now+=1;
+        if(now>oli1.length-1){
+            now=0;
+        }
+        tab();
+    }
+    //左右切换图片结束
+
+    }
+
+	</script>
+</head>
+<body>
+	<div id="main">
+     <div class="left"><img src="image/left.png" alt=""></div>
+     <div class="right"><img src="image/right.png" alt=""></div>
+     <ol>
+     	<li class="red">1</li>
+     	<li>2</li>
+     	<li>3</li>
+     	<li>4</li>
+     	<li>5</li>
+     </ol>
+     <ul>
+     	<li><img src="image/57ee2d33N4b317d59.jpg" alt=""></li>
+     	<li><img src="image/57ec82cdN0b784d29.jpg" alt=""></li>
+     	<li><img src="image/56555cd9N70ac7a6b.jpg" alt=""></li>
+     	<li><img src="image/57ecbd05Ncd2c5d0a.jpg" alt=""></li>
+     	<li><img src="image/57e4c98eNd0bef0d7.jpg" alt=""></li>
+     </ul>
+	</div>
+</body>
+</html>

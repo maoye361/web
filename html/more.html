@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>购物车</title>
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<script type="text/javascript" src='../js/jquery-3.1.1.js'></script>
+	<script type='text/javascript' src='../js/bootstrap.min.js'></script>
+</head>
+<body ng-app>
+	<div ng-controller="car" class="container table-responsive">
+    <div class="row">
+        <div class="col-sm-12">
+              <input type="text" class="form-control text-center" placeholder="Enter Name" ng-model='name'>
+        </div>
+    </div>
+         <table class="table table-hover" ng-show='cart.length' id="table">
+            <thead>
+                <tr>
+                    <th>产品编号</th>
+                    <th>产品名字</th>
+                    <th>购买数量</th>
+                    <th>产品单价</th>
+                    <th>产品总价</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                 <tr ng-repeat="items in cart|filter:name|orderBy:['name','id']">
+                  <td>{{items.id}}</td>
+                  <td>{{items.name|uppercase}}</td>
+                  <td>
+                    <button class="btn btn-info" ng-click='reduce(items.id)'>-</button>
+                    <input type="text" value="{{items.num}}" ng-model='items.num'>
+                    <button class="btn btn-info" ng-click='add(items.id)'>+</button>
+                  </td>
+                  <td>{{items.price|currency:'￥'}}</td>
+                  <td>{{items.price * items.num|currency:'￥'}}</td>
+                  <td><button class="btn btn-danger" ng-click='remove(items.id)'>移除</button></td>
+                 </tr>
+                 <tr>
+                     <td>总价</td><td>{{allprice()|currency:'￥'}}</td>
+                     <td>总数</td><td>{{allnum()}}</td>
+                     <td colspan="2" class="text-center"><button class="btn btn-danger" ng-click='remove(-2)'>清空购物车</button></td>
+                 </tr>
+            </tbody>
+         </table>
+         <h1 ng-show='!cart.length' style="font-size:150px;color:#cccccc;">购物车为空！</h1>
+	</div>
+  <script type="text/javascript" src='../js/angular-1.2.5.js'></script>
+	<script>
+	// 定义constroller
+ 
+    alert('这是用bootstrap和angular实现的购物车，主要体现angualr对数据的增删改查'); 
+
+       var car=function($scope){
+       	// 设置$scope.cart数组
+          $scope.cart=[
+             {
+             	id:1,name:'xiaomi',num:3,price:1999
+             },
+             {
+             	id:2,name:'meizu',num:5,price:1599
+             },
+             {
+             	id:3,name:'honor',num:5,price:3599
+             },
+             {
+             	id:4,name:'iphone',num:5,price:5599
+             },
+             {
+              id:11,name:'xiaomi',num:3,price:1999
+             },
+             {
+              id:22,name:'meizu',num:5,price:1599
+             },
+             {
+              id:33,name:'honor',num:5,price:3599
+             },
+             {
+              id:44,name:'iphone',num:5,price:5599
+             },
+             {
+              id:111,name:'xiaomi',num:3,price:1999
+             },
+             {
+              id:222,name:'meizu',num:5,price:1599
+             },
+             {
+              id:333,name:'honor',num:5,price:3599
+             },
+             {
+              id:444,name:'iphone',num:5,price:5599
+             },
+             {
+              id:1111,name:'xiaomi',num:3,price:1999
+             },
+             {
+              id:2222,name:'meizu',num:5,price:1599
+             },
+             {
+              id:3333,name:'honor',num:5,price:3599
+             },
+             {
+              id:4444,name:'iphone',num:5,price:5599
+             }
+          ];
+          // 计算数组里面的总价格
+          $scope.allprice=function(){
+          	var ap=0;
+          	 angular.forEach($scope.cart,function(item){
+                 ap+=item.num*item.price;
+          	 })
+          	 return ap;
+          };
+          // 计算数组里面的总数
+          $scope.allnum=function(){
+          	var an=0;
+          	 angular.forEach($scope.cart,function(item){
+                 an+=parseInt(item.num);
+          	 })
+          	 return an;
+          };
+          // 移除某个产品,是通过产品id来删除
+          $scope.remove=function(id)
+          {
+          	// 判断传进来的值为-2的话就是用户点击了清空购物车，那么把数组里面的所有值删掉
+          	if(id===-2)
+          	{
+              var returnkey=confirm('是否从购物车内删除该产品');
+              if(returnkey)
+              {
+                $scope.cart=[];
+              }
+          	}
+          	// 初始化索引
+          	var index=-1;
+          	// 循环数组里面的所有值，其中key的值从0开始,可以用来表示数组的下标
+          	angular.forEach($scope.cart,function(item,key){
+          		if(item.id===id)
+          		{
+                 index=key;
+          		}
+          	}) 
+            // 如果索引不为-1，删掉数组里面id为key的数据
+            if(index!==-1)
+            {
+              $scope.cart.splice(index,1)
+            }
+          };
+          // 点击减少购物车产品的数量,一样传入id
+           $scope.reduce=function(id){
+              angular.forEach($scope.cart,function(item,key)
+              {
+              	if(item.id===id)
+              	{
+              		// 判断传入的产品id里面的数量是否大于1，如果大于1可以减少
+              		if($scope.cart[key].num>1)
+              		{
+              			$scope.cart[key].num--;
+              		}else{
+              			// 如果不是为1，也就是比一小的话为零时，调用remove方法删除整个数据
+                       var returnkey=confirm('是否从购物车内删除该产品');
+                       if(returnkey){$scope.remove(id)}
+              		}
+              	}
+              })
+          }
+          // 为产品增加数量
+           $scope.add=function(id){
+              angular.forEach($scope.cart,function(item,key)
+              {
+              	if(item.id===id)
+              	{
+                  
+              		$scope.cart[key].num++;
+              	}
+              })
+          }
+          // 为产品数量添加监听事件，当产品数量小于零时，把产品从购物车内删除
+          // 监听对象要加''号；
+          $scope.$watch('cart',function(newvalue,oldvalue){
+               angular.forEach($scope.cart,function(item,key){
+               	  if(item.num<1)
+               	  {
+               	  	var returnkey=confirm('是否从购物车内删除该产品');
+                    if(returnkey)
+                      {
+                      	$scope.remove(item.id);
+                      }else{                       
+               	  	    item.num=oldvalue[key].num;
+               	      }
+               	  }
+               })
+          },true);
+       }
+	</script>
+</body>
+</html>

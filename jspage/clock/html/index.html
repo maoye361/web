@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>水滴数码时钟</title>
+	<style type="text/css">
+	body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; }
+body { background:#fff; color:#555; font-size:14px; font-family: Verdana, Arial, Helvetica, sans-serif; }
+td,th,caption { font-size:14px; }
+h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
+address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal;}
+a { color:#555; text-decoration:none; }
+a:hover { text-decoration:underline; }
+img { border:none; }
+ol,ul,li { list-style:none; }
+input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; }
+table { border-collapse:collapse; }
+html {overflow-y: scroll;}
+
+.clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
+.clearfix { *zoom:1; }
+  #main{
+        width: 1000px;
+        height: 200px;
+        /*background: pink;*/
+        margin: 7% auto;
+       }
+       #main img{
+        width:70px;
+        height: 180px;
+        display: block;
+        float: left;
+        margin: 0;
+        padding:0;
+        border: 0;
+       }
+       #main .year{
+        display: block;
+        width: 70px;
+        height: 180px;
+        float: left;
+        font-size: 100px;
+        line-height: 180px;
+        margin: 0;
+        padding:0;
+        border: 0;
+        margin-left:20px;
+        margin-right:55px;
+
+        _margin-left:10px;
+        _margin-right:20px;
+        /*当元素为块级元素且设置浮动，那么设置元素的左右外边距的时候，IE6就会出现双倍边距的Bug，这时就需要用hack，_margin是IE6独认的，所以这时就可以给元素设置_margin的CSS样式，而其它浏览器不会有影响。。。PS：IE7独认*margin*/
+       }
+  #time{
+  	margin:5% auto;
+  	width: 900px;
+  }
+	  #time img{
+	  	width: 120px;
+	  	height: 200px;
+	  	border: 0;
+	  	margin: 0;
+	  	padding: 0;
+	  	/*padding-left:10px;*/
+	  	/*margin-left: 40px;*/
+	  }
+	  #time .jiange{
+	  	margin-right: 60px;
+	  }
+	</style>
+</head>
+<body>
+<div id="main">
+  <img src="" alt="">
+  <img src="" alt="">
+  <img src="" alt="">
+  <img src="" alt=""><span class="year">年</span>
+  <img src="" alt="">
+  <img src="" alt=""><span class="year">月</span>
+  <img src="" alt="">
+  <img src="" alt=""><span class="year">日</span>
+</div>
+<div id="time">
+  <img src="" alt="">
+  <img src="" alt="" class="jiange">
+  <img src="" alt="">
+  <img src="" alt="" class="jiange">
+  <img src="" alt="">
+  <img src="" alt="">
+</div>	
+</body>
+<script type="text/javascript"> 
+ var time=document.getElementById('time');
+ var timg=time.getElementsByTagName('img');
+  function todou(n){
+  	if(n<10){
+  		return '0'+n;
+  	}else{
+  		return ''+n;
+  	}
+  } 
+  setInterval(tick,1000);
+  tick();
+  function tick(){
+  	  var tDate=new Date();
+      var str=todou(tDate.getHours())+todou(tDate.getMinutes())+todou(tDate.getSeconds());
+      for(var i=0;i<timg.length;i++){
+            timg[i].src='../image/'+str.charAt(i)+'.jpg';        
+  	  }
+  }
+  var omain=document.getElementById('main');
+  var oimg=omain.getElementsByTagName('img');
+  function tobe(n){
+    if(n>9){
+      return ''+n;
+    }else{
+      return '0'+n;
+    }
+  }
+  function mtick(){for(var i=0;i<oimg.length;i++){
+     var date=new Date();
+     var str=tobe(date.getFullYear())+tobe((date.getMonth()+1))+tobe(date.getDate());
+     oimg[i].src='../image/'+str.charAt(i)+'.jpg';
+  }}
+    setInterval(mtick,1000);
+  mtick();
+</script>
+</html>

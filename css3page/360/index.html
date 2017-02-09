@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>360度旋转图片</title>
+	<link rel="stylesheet" type="text/css" href="../../css/animate.css">
+	<style>
+	.img_wrap{
+		width: 640px;height: 378px;margin: 100px auto;
+	}
+	img{
+		width: 640px;height: 378px;position: absolute;
+	}
+	</style>
+	<script>
+	window.onload=function(){
+		var x=0;
+		var oImg=document.getElementById('img1');
+		document.onmousedown=function(ev){
+			var ev=ev||event;
+			var disX=ev.clientX-x;
+			document.onmousemove=function(ev){
+				var ev=ev||event;
+				x=ev.clientX-disX;
+				var l=parseInt(-x/15);
+				if(l>0){
+					l=l%72;
+				}else{
+					l=l+(-72*(Math.floor(l/72)));
+				}
+				console.log(disX+",,,"+ev.clientX+",,,"+x+",,,"+l);
+				oImg.src="img/"+l+".jpg";
+				return false;
+			};
+			document.onmouseup=function(){
+				document.onmouseup=null;
+				document.onmousemove=null;
+			}
+			return false;
+		}
+
+	}
+	</script>
+</head>
+<body>
+   <div class="img_wrap animated jello">
+      <img id="img1" src="img/0.jpg">
+   </div>
+</body>
+</html>

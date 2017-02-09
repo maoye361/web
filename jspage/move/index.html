@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>无缝滚动</title>
+	<style type="text/css">
+		body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; }
+body { background:#fff; color:#555; font-size:14px; font-family: Verdana, Arial, Helvetica, sans-serif; }
+td,th,caption { font-size:14px; }
+h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
+address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal;}
+a { color:#555; text-decoration:none; }
+a:hover { text-decoration:underline; }
+img { border:none; }
+ol,ul,li { list-style:none; }
+input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; }
+table { border-collapse:collapse; }
+html {overflow-y: scroll;}
+
+.clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
+.clearfix { *zoom:1; }
+
+
+
+
+     #main{
+     	width: 1400px;
+     	height: 212px;
+     	/*background: pink;*/
+     	margin: 10% auto;
+     	position: relative;
+     	overflow: hidden;
+     }
+     #main ul{
+     	position: absolute;
+     	top: 0;
+     	left: 0;
+
+     }
+     #main ul li{
+     	float: left;
+     	width: 350px;
+     	height: 212px;
+     	/*margin-left: 5px;*/
+     }
+     #main ul li img{
+     	width: 345px;
+     	height: 212px;
+     }
+	</style>
+	<script type="text/javascript">
+    window.onload=function()
+    {
+         
+         var odiv=document.getElementById('main');
+         var oul=odiv.getElementsByTagName('ul')[0];
+         var ali=odiv.getElementsByTagName('li');
+         var speed=2;
+         oul.innerHTML+=oul.innerHTML;
+         //把ul的内容扩展成两倍，这样在移动过程中就不会出现空白，起码在一次运动中不会出现空白
+         oul.style.width=ali[0].offsetWidth*ali.length+'px'; 
+         //获取ul的宽度，ul的宽度其实就相同于所有li的宽度
+         function move(){//这是定时器里面执行的函数
+         	if(oul.offsetLeft<-oul.offsetWidth/2)
+         	{
+         		oul.style.left='0';//这句话的作用是当元素向左运动时，值是负数的，当运动到这个元素的一半宽度时，我们要把元素的左边距拉回到起点位置，也就是元素的左边距为0,这样元素配合定时器做运动的时候就给人感觉元素一直源源不断的从浏览器的右边一直往左边运动，且没有停歇，而实际上是元素运动到元素一半宽度的时候我们就把元素的左边距设置为零，等于重头运动
+         	}
+         	if(oul.offsetLeft>0)
+         	{
+         		oul.style.left=-oul.offsetWidth/2+'px';//这句话的作用是当元素向右运动时，值是正数的，当元素的边距大于零时，我们要把元素的边距拉到元素宽度的一半位置，也就是元素的左边距为负的元素宽度的一半,这样元素配合定时器做运动的时候就给人感觉元素一直源源不断的从浏览器的左边一直往左右运动，且没有停歇，而实际上是元素运动到边距要大于零的时候我们就把元素的左边距设置为元素宽度的一半（负数)，
+         	}
+         	oul.style.left=oul.offsetLeft-speed+'px';
+         	//这句话配合定时器的使用可以让ul不断的增加自身的向左的边距，这样就会给人感觉像是在运动一样，offsetLeft是计算ul的总的左边距，而这个值的正负也代表ul距离它本来位置的大小，所以上面ul需要相对与它的父级元素绝对定位，这样能保证ul在初始的时候跟父级元素在同一起点上，位置固定了，才能设置ul的offsetLeft的值
+         }
+
+          var timeover=setInterval(move,30);//这是给定时器设置个名字，方便定时器的开启与关闭
+          odiv.onmouseover=function(){//用元素的父级做鼠标事件，可以不用给每个元素做鼠标时间
+          	clearInterval(timeover);//这是鼠标移入元素时候关闭定时器，这么做是为了人们在浏览商品的时候鼠标停顿在元素身上时候可以长时间查看商品二不受定时器函数的影响
+          }
+          odiv.onmouseout=function(){
+          	timeover=setInterval(move,30);//这是鼠标移出元素，定时器开启
+          }
+          var aa=document.getElementsByTagName('a');//这是获取两个可以控制定时器移动方向的按钮
+
+          aa[0].onclick=function(){
+          	speed=2;//当点击向左按钮时，元素移动方向会向左移动，其实就是更改元素左边距在初始为零的时候是加还是减，因为比零小为负数时，元素就相当于向左运动
+          }
+          aa[1].onclick=function(){
+          	speed=-speed;//当点击向右按钮是，元素移动方向会向右运动，其实就是更改元素左边距为初始零的时候是加还是减，因为比零大为负数时，元素就相当于向右运动。需要注意的是，无论向左还是右，元素的做边距始终在负数到零之间，不会超过零变成正数，总结起来就是：元素向左运动的时候，值是从零到负数，而元素向右运动的时候，值是从零跳到最小负数然后到零再跳到最小负数再到零的这么一个过程。PS：最小负数为该ul的总宽度的一半的负值。
+          }
+       
+    }
+	</script>
+</head>
+<body>  <a href="#">左</a>
+<div id="main">
+
+  <ul>
+  	<li><img src="image/meituan01.jpg" alt=""></li>
+  	<li><img src="image/meituan02.jpg" alt=""></li>
+  	<li><img src="image/meituan03.jpg" alt=""></li>
+  	<li><img src="image/meituan04.jpg" alt=""></li>
+  </ul>
+ 
+</div>	 
+<a href="#" onclick="fu()">右</a>
+</body>
+</html>

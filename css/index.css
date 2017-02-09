@@ -1,0 +1,30 @@
+body{
+	padding-top: 50px;
+}
+/*导航区域*/
+#nav{
+	width: 100%;height: 50px;background-color: #333;position: fixed;top: 0px;left: 0;z-index: 100;
+}
+#nav .nav-left{
+	float: left;height: 50px;
+}
+#nav .nav-left p{
+	color: white;text-align: center;font-size: 25px;line-height: 50px;
+}
+#nav .nav-right{
+	float: right;
+}
+#navbar{
+	position: relative;overflow: hidden;height: 50px;width: 180px;cursor: pointer;
+}
+#navbar .nav-box
+{
+	background-color: rgba(0,0,0,0.8);
+	width: 60px;height: 50px;position: absolute;z-index: 0;top: 0;
+}
+#navbar ul{
+	position: relative;z-index: 1;width: 180px;height: 50px;
+}
+#navbar ul li{
+	float: left;line-height: 50px;height: 50px;width: 60px;color: white;text-align: center;
+}

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>原生JS实现瀑布流布局</title>
+	<style>
+	   *{margin:0;padding: 0;}
+	   #main{
+	   	position: relative;
+	   }
+	   .box{
+	   	padding: 15px 0 0 15px;float: left;
+	   }
+	   .pic{
+	   	 padding: 10px;border: 1px solid #ccc;border-radius: 5px;box-shadow: 0 0 5px #ccc;
+	   }
+	   .pic img{
+	   	width: 165px;height: auto;
+	   }
+	</style>
+	<script type="text/javascript">
+        window.onload=function(){
+        	var iarr=[31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97];
+            water('main','box');
+            window.onscroll=function(){
+              if(getscroll()){
+              	var om=document.getElementById('main');
+              	//创建元素并把这些元素加到main这个大元素里面
+              	for(var i=0;i<iarr.length;i++)
+              	{
+              	 var ob=document.createElement('div');
+                 ob.className='box';
+                 om.appendChild(ob);
+                 var op=document.createElement('div');
+                 op.className='pic';
+                 ob.appendChild(op);
+                 var oimg=document.createElement('img');
+                 oimg.src='images/'+iarr[i]+'.jpg';
+                 op.appendChild(oimg);
+              	}
+              	//动态生成的元素需要按照瀑布流的布局形式定位
+              	water('main','box');
+              }
+            };
+        }
+        function water(parent,box){
+           var op=document.getElementById(parent);
+           var ob=cls(op,box);
+           var obw=ob[0].offsetWidth;
+           var col=Math.floor(document.documentElement.clientWidth/obw);
+           op.style.cssText='width:'+obw*col+'px;margin:0 auto';
+           var carr=[];
+           for(var i=0;i<ob.length;i++)
+           {
+           	// 瀑布流的布局核心是检查第一排里面元素的最小高度，让第一排以后的元素按照第一排最小的元素所在的位置实现绝对定位，换句话说就是以后的元素的left,top值都根据每次最小的元素的位置决定
+           	if(i<col)
+           	{
+           		carr.push(ob[i].offsetHeight);
+           	}else{
+           		// Math.min方法适用于基本类型的数据，不能用于引用类型，即不能用数组，所以加了.apply方法
+           		var minH=Math.min.apply(null,carr);
+           		// 由于要获取最小的元素的位置，所以需要知道这个元素的索引值，才能设置后面元素的left值
+           		var index=getminindex(carr,minH);
+           		ob[i].style.position='absolute';
+           		ob[i].style.top=minH+'px';
+           		ob[i].style.left=ob[index].offsetLeft+'px';
+           		// 更新数组的值，不然最小值永远是刚开始的最小值，核心是排完一个元素后，让数组里面的最小高度的值等于原先的值加上排在它屁股后面的元素的高度值
+           		carr[index]+=ob[i].offsetHeight;
+           	}
+           }
+        }
+        function cls(parent,clss){
+           var arr=[];
+           obs=parent.getElementsByTagName('*');
+           for(var i=0;i<obs.length;i++)
+           {
+           	if(obs[i].className==clss)
+           	{
+           		arr.push(obs[i]);
+           	}
+           }
+           return arr;
+        }
+        function getminindex(arr,val){
+           for(var i=0;i<arr.length;i++)
+           {
+           	if(arr[i]==val)
+           	{
+           		return i;
+           	}
+           }
+        }
+        //判断滚动是否符合加载图片条件，就是判断原有图片的最后一张图片的offsetHeight是否小于body.scrollTop+clientHeight,小于满足条件加载图片
+        function getscroll(){
+           var oparent=document.getElementById('main');
+           var obs=cls(oparent,'box');
+           var height=obs[obs.length-1].offsetTop;
+           var cheight=document.body.scrollTop||document.documentElement.scrollTop;
+           var documentH=document.documentElement.clientHeight;
+           return (cheight+documentH>height)?true:false;
+        }
+	</script>
+</head>
+<body>
+	<div id="main">
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/0.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/1.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/2.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/3.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/4.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/5.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/6.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/7.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/8.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/9.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/10.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/11.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/12.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/13.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/14.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/15.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/16.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/17.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/18.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/19.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/20.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/21.jpg">
+	         </div>
+	    </div>
+        <div class="box">
+	         <div class="pic">
+	            <img src="images/22.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/23.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/24.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/25.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/26.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/27.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/28.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/29.jpg">
+	         </div>
+	    </div>
+	    <div class="box">
+	         <div class="pic">
+	            <img src="images/30.jpg">
+	         </div>
+	    </div>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>放大</title>
+	<style>
+	body{padding-top: 100px;padding-left: 100px;}
+	 #small{width: 160px;height: 160px;background: url(bg.jpg);background-size: 100%;float: left;margin-right: 50px;}
+	 #big{width: 320px;height:320px;background: url(bg.jpg);float: left;}
+	</style>
+</head>
+<body>
+    <div id="small"></div>
+    <div id="big" ></div>
+	<script src="../../js/jquery-3.1.1.js" type="text/javascript"></script>
+	<script>
+     $(function(){
+       $('#big').hide();
+       $('#small').on('mouseover',function(){
+       	  $('#big').show();
+       	  $('#small').on('mousemove',function(e){
+       	  	var e=e||event;
+       	  	var dx=e.pageX;
+       	  	var dy=e.pageY;
+       	  	var sx=dx-$('#small').offset().left;
+       	  	var sy=dy-$('#small').offset().top;
+            $('#big').css({
+            	'backgroundPositionX': '-'+sx*2+'px',
+            	'backgroundPositionY': '-'+sy*2+'px'
+            })
+       	  });
+       	  $('#small').on('mouseout',function(){
+       	  	$('#big').hide();
+       	  	$('#big').css({
+            	backgroundPosition: '0 0'
+            })
+       	  })
+       })
+     })
+	</script>
+</body>
+</html>

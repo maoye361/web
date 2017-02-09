@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>移动web页面</title>
+	<style>
+	*{margin: 0;padding:0;border: 0;}
+	body{
+		background:#00BFFF;
+	}
+	.parent{
+		width: 670px;height:320px;position: absolute;
+		top: 50%;left: 50%;transform: translate(-50%,-50%); 
+		-webkit-transform: translate(-50%,-50%);
+		-moz-transform: translate(-50%,-50%);
+		padding-left: 10px;
+	}
+	.child{
+		float: left;
+		background-size: 100%;width: 319px;height: 319px;
+	}
+	.imooc{
+        background: url(../image/imooc.jpg);margin-right: 10px;
+	}
+	.three{
+        background: url(../image/3.jpg);margin-right: 10px;
+	}
+	</style>
+</head>
+<body>
+	<div class="parent">
+	  <div class="child imooc">
+	  </div>
+	  <div class="child three">
+	  </div>
+	</div>
+</body>
+</html>
