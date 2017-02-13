@@ -8,6 +8,8 @@ $(function(){
             var Name=['index','product','resume'];
             location.href=Name[$(this).index()]+'.html';
         });
+      }).on('mouseout',function(){
+        startMove($('#navbar .nav-box')[0],0);
       });
      });
 });
@@ -17,7 +19,7 @@ function startMove(obj, iTarget)
   var left = 0;
  clearInterval(obj.timer);
  obj.timer = setInterval(function(){
- iSpeed += (iTarget - obj.offsetLeft)/5;
+ iSpeed += (iTarget - obj.offsetLeft)/3;
  iSpeed *= 0.7;
  left += iSpeed;
  // 当ispeed<1并且(left-itarget)<1，代表着此时的元素距离目标值的距离小于一个像素

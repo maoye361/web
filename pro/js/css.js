@@ -6,16 +6,17 @@ window.onload=function ()
 	var aLi=oUl.getElementsByTagName('li');
 	var i=0;
 	var iNow=0;
-	var aA=oDiv.getElementsByTagName('a');
+	var oprev=document.getElementById('prev');
+	var onext=document.getElementById('next');
 	var ready=true;
 	var wait=0;
 	
-	aA[0].onclick=function ()
+	oprev.onclick=function ()
 	{
 		tab((iNow-1+aLi.length)%aLi.length);
 	};
 	
-	aA[1].onclick=function ()
+	onext.onclick=function ()
 	{
 		tab((iNow+1)%aLi.length);
 	};
@@ -67,10 +68,10 @@ window.onload=function ()
 		switch(oEvent.keyCode)
 		{
 			case 37:	//←
-				aA[0].onclick();
+				oprev.onclick();
 				break;
 			case 39:	//→
-				aA[1].onclick();
+				onext.onclick();
 				break;
 		}
 	};

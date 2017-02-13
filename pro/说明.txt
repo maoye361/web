@@ -1,0 +1,13 @@
+1.首页:背景图用了css3动画效果，把图片放在span中，让每个span执行36s的动画，一共6个span，然后用nth-child选择每个span让第二个delay6s，第三个delay12s，设置延时效果，由于这个动画只到22%有视觉效果，所以6s后第二个动画就显示出来，以此类推。
+
+      :导航条用了弹性运动，当鼠标放在导航条上，让一个块弹性运动起来，原理是，获取itarget和自身的offsetLeft相减，让ispeed速度累加每次的差值，这样就形成加速运动，然后当offsetLeft与itarget相差值接近1px时，让两个值相等，关闭定时器。
+
+2.作品页:导航条用css3动画效果,before让li有个下边框，设置width为0，hover时让width为100%，当然要给li加动画效果transition
+
+        :圆模块用了判断鼠标进入效果，原理是当鼠标hover在模块上时，判断是进入还是离开，然后获取鼠标的坐标轴与圆的上下左右相减出差值判断，那个差值最小，代表是从那个方向进入，设置透明块的position值。
+
+3.简历页面:导航条个作品页面一样也是css3动画效果
+         
+          :背景图用了background-attachment: fixed;让背景图有视差滑动的效果.
+
+4:css/html页面：模仿safari历史记录效果，用css3效果，让每个图片都position定位，设置.cur,.left,.left2,.right,.right2这五个类名，设置的perspective，看起来有立体效果,设置rotate，让他们旋转一定角度,键盘←→控制图片的类名，这样就有了效果
