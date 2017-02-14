@@ -25,14 +25,14 @@ $(function(){
     	case jtop:
     	if(bool){
            $(this).find('.cover').css({
-           	 top:"-250px",
+           	 top:"-300px",
            	 left:0
            }).stop().animate({
            	  top:'0'
            },500);
     	}else{
             $(this).find('.cover').stop().animate({
-            	top:'-250px'
+            	top:'-300px'
             },500)
     	}
     	break;
@@ -40,27 +40,27 @@ $(function(){
     	if(bool){
            $(this).find('.cover').css({
            	 top:0,
-           	 left:"-250px"
+           	 left:"-300px"
            }).stop().animate({
            	  left:'0'
            },500);
     	}else{
             $(this).find('.cover').stop().animate({
-            	left:"-250px"
+            	left:"-300px"
             },500)
     	}
     	break;
     	case jbottom:
     	if(bool){
            $(this).find('.cover').css({
-           	 top:"250px",
+           	 top:"300px",
            	 left:'0'
            }).stop().animate({
            	  top:'0'
            },500);
     	}else{
             $(this).find('.cover').stop().animate({
-            	top:"250px"
+            	top:"300px"
             },500)
     	}
     	break;
@@ -68,13 +68,13 @@ $(function(){
     	if(bool){
            $(this).find('.cover').css({
            	 top:"0",
-           	 left:'250px'
+           	 left:'300px'
            }).stop().animate({
            	  left:'0'
            },500);
     	}else{
             $(this).find('.cover').stop().animate({
-            	left:'250px'
+            	left:'300px'
             },500)
     	}
     	break;
